@@ -70,7 +70,7 @@ class Intensity_Club_Tools {
 		if ( defined( 'INTENSITY_CLUB_TOOLS_VERSION' ) ) {
 			$this->version = INTENSITY_CLUB_TOOLS_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'intensity-club-tools';
 
