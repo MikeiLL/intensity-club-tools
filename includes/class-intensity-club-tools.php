@@ -122,6 +122,11 @@ class Intensity_Club_Tools {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-intensity-club-tools-public.php';
 
+        /**
+         * The classes that hold the WP Forms Templates
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-intensity-club-tools-wpforms.php';
+
 		$this->loader = new Intensity_Club_Tools_Loader();
 
 	}
@@ -172,6 +177,8 @@ class Intensity_Club_Tools {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+        $this->loader->add_action( 'init', $plugin_public, 'create_acf_fields_and_shortcodes' );
+        $this->loader->add_action( 'wp_head', $plugin_public, 'json_ld_breadcrumb_trail' );
 
 	}
 

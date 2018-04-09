@@ -100,4 +100,87 @@ class Intensity_Club_Tools_Public {
 
 	}
 
+    /*
+     *
+     * ACF Custom Options Page where we store fields
+     *
+     */
+    public function create_acf_fields_and_shortcodes() {
+
+        if( function_exists('acf_add_options_page') ) {
+
+            acf_add_options_page(array(
+                'page_title' 	=> 'Intensity Reusable Fields',
+                'menu_title'	=> 'Reusable Fields',
+                'menu_slug' 	=> 'reusable-intensity-fields',
+                'capability'	=> 'edit_posts',
+                'redirect'		=> false
+            ));
+
+            /*
+             * Return our Reusable Fields as stored in ACF Options Field
+             */
+            function intensity_policies_display() {
+                return get_field('policies', 'option');
+            }
+            add_shortcode('policies', 'intensity_policies_display');
+
+            function intensity_match_play_display() {
+                return get_field('match_play', 'option');
+            }
+            add_shortcode('match_play', 'intensity_match_play_display');
+
+            function intensity_video_analytics_display() {
+                return get_field('video_analytics', 'option');
+            }
+            add_shortcode('video_analytics', 'intensity_video_analytics_display');
+
+            function intensity_physical_conditioning_display() {
+                return get_field('physical_conditioning', 'option');
+            }
+            add_shortcode('physical_conditioning', 'intensity_physical_conditioning_display');
+
+            function intensity_student_pro_ratio_display() {
+                return get_field('student_pro_ratio', 'option');
+            }
+            add_shortcode('student_pro_ratio', 'intensity_student_pro_ratio_display');
+
+            function intensity_register_now_display() {
+                return get_field('register_now', 'option');
+            }
+            add_shortcode('register_now', 'intensity_register_now_display');
+
+            function intensity_payment_display() {
+                return get_field('payment', 'option');
+            }
+            add_shortcode('payment', 'intensity_payment_display');
+
+            function intensity_contact_elynne_display() {
+                return get_field('contact_elynne', 'option');
+            }
+            add_shortcode('contact_elynne', 'intensity_contact_elynne_display');
+
+            function intensity_junior_usta_team_tennis_display() {
+                return get_field('junior_usta_team_tennis', 'option');
+            }
+            add_shortcode('junior_usta_team_tennis', 'intensity_junior_usta_team_tennis_display');
+
+        }
+
+    }
+
+    /*
+     *  Generate the Breadcrumb-navxt
+     * source: https://mtekk.us/archives/guides/fun-with-bcn_display_json_ld-the-basics/
+     *
+     */
+    public function json_ld_breadcrumb_trail() {
+        if (function_exists(‘bcn_display’))
+        {
+            bcn_display();
+        }
+    }
+
+
+
 }
