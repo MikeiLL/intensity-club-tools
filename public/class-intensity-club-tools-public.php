@@ -175,7 +175,7 @@ class Intensity_Club_Tools_Public {
      *
      */
     public function json_ld_breadcrumb_trail() {
-        if (function_exists(‘bcn_display’))
+        if (function_exists("bcn_display"))
         {
             bcn_display();
         }
