@@ -30,7 +30,9 @@
 	 */
 
   $( window ).load(function() {
-    alert("Intensity Club Tools");
+    console.log("Intensity Club Tools Script Loaded");
+    $('video').prop('muted', true);
+    console.log($('video'));
   });
 
 })( jQuery );

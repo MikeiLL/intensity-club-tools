@@ -177,8 +177,12 @@ class Intensity_Club_Tools {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-        $this->loader->add_action( 'init', $plugin_public, 'create_acf_fields_and_shortcodes' );
-        $this->loader->add_action( 'wp_head', $plugin_public, 'json_ld_breadcrumb_trail' );
+        if( function_exists('acf_add_options_page') ) {
+            $this->loader->add_action('init', $plugin_public, 'create_acf_fields_and_shortcodes');
+        }
+        $this->loader->add_action( 'init', $plugin_public, 'create_shortcodes' );
+        // TODO use following or just display in template?
+        // $this->loader->add_action( 'wp_head', $plugin_public, 'json_ld_breadcrumb_trail' );
 
 	}
 

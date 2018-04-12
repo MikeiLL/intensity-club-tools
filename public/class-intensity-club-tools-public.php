@@ -105,67 +105,70 @@ class Intensity_Club_Tools_Public {
      * ACF Custom Options Page where we store fields
      *
      */
+
+    public function intensity_junior_usta_team_tennis_display() {
+        return get_field('junior_usta_team_tennis', 'option');
+    }
+
+    public function intensity_contact_elynne_display() {
+        return get_field('contact_elynne', 'option');
+    }
+
+    public function intensity_policies_display() {
+        return get_field('policies', 'option');
+    }
+
+    public function intensity_match_play_display() {
+        return get_field('match_play', 'option');
+    }
+
+    public function intensity_video_analytics_display() {
+        return get_field('video_analytics', 'option');
+    }
+
+    public function intensity_physical_conditioning_display() {
+        return get_field('physical_conditioning', 'option');
+    }
+
+    public function intensity_student_pro_ratio_display() {
+        return get_field('student_pro_ratio', 'option');
+    }
+
+    public function intensity_register_now_display() {
+        return get_field('register_now', 'option');
+    }
+
+    public function intensity_payment_display() {
+        return get_field('payment', 'option');
+    }
+
     public function create_acf_fields_and_shortcodes() {
 
-        if( function_exists('acf_add_options_page') ) {
+        acf_add_options_page(array(
+            'page_title' 	=> 'Intensity Reusable Fields',
+            'menu_title'	=> 'Reusable Fields',
+            'menu_slug' 	=> 'reusable-intensity-fields',
+            'capability'	=> 'edit_posts',
+            'redirect'		=> false
+        ));
 
-            acf_add_options_page(array(
-                'page_title' 	=> 'Intensity Reusable Fields',
-                'menu_title'	=> 'Reusable Fields',
-                'menu_slug' 	=> 'reusable-intensity-fields',
-                'capability'	=> 'edit_posts',
-                'redirect'		=> false
-            ));
+        add_shortcode('policies', array($this, 'intensity_policies_display'));
 
-            /*
-             * Return our Reusable Fields as stored in ACF Options Field
-             */
-            function intensity_policies_display() {
-                return get_field('policies', 'option');
-            }
-            add_shortcode('policies', 'intensity_policies_display');
+        add_shortcode('match_play', array($this, 'intensity_match_play_display'));
 
-            function intensity_match_play_display() {
-                return get_field('match_play', 'option');
-            }
-            add_shortcode('match_play', 'intensity_match_play_display');
+        add_shortcode('video_analytics', array($this, 'intensity_video_analytics_display'));
 
-            function intensity_video_analytics_display() {
-                return get_field('video_analytics', 'option');
-            }
-            add_shortcode('video_analytics', 'intensity_video_analytics_display');
+        add_shortcode('physical_conditioning', array($this, 'intensity_physical_conditioning_display'));
 
-            function intensity_physical_conditioning_display() {
-                return get_field('physical_conditioning', 'option');
-            }
-            add_shortcode('physical_conditioning', 'intensity_physical_conditioning_display');
+        add_shortcode('student_pro_ratio', array($this, 'intensity_student_pro_ratio_display'));
 
-            function intensity_student_pro_ratio_display() {
-                return get_field('student_pro_ratio', 'option');
-            }
-            add_shortcode('student_pro_ratio', 'intensity_student_pro_ratio_display');
+        add_shortcode('register_now', array($this, 'intensity_register_now_display'));
 
-            function intensity_register_now_display() {
-                return get_field('register_now', 'option');
-            }
-            add_shortcode('register_now', 'intensity_register_now_display');
+        add_shortcode('payment', array($this, 'intensity_payment_display'));
 
-            function intensity_payment_display() {
-                return get_field('payment', 'option');
-            }
-            add_shortcode('payment', 'intensity_payment_display');
+        add_shortcode('contact_elynne', array($this, 'intensity_contact_elynne_display'));
 
-            function intensity_contact_elynne_display() {
-                return get_field('contact_elynne', 'option');
-            }
-            add_shortcode('contact_elynne', 'intensity_contact_elynne_display');
-
-            function intensity_junior_usta_team_tennis_display() {
-                return get_field('junior_usta_team_tennis', 'option');
-            }
-            add_shortcode('junior_usta_team_tennis', 'intensity_junior_usta_team_tennis_display');
-
-        }
+        add_shortcode('junior_usta_team_tennis', array($this, 'intensity_junior_usta_team_tennis_display'));
 
     }
 
@@ -181,6 +184,55 @@ class Intensity_Club_Tools_Public {
         }
     }
 
+    /*
+     *  List Child Pages
+     */
+    public function list_child_pages() {
 
+        global $post;
+
+        // Return if page has no child or parent pages
+        $children = get_pages( array( 'child_of' => $post->ID ) );
+        if ((count( $children ) === 0) && ($post->post_parent === 0)) return;
+
+        $args = array(
+            'depth'        => 1,
+            'child_of'     => $post->post_parent,
+            'exclude'      => '',
+            'title_li'     => '',
+            'echo'         => 0,
+            'authors'      => '',
+            'sort_column'  => 'menu_order, post_title',
+            'link_before'  => '',
+            'link_after'   => '',
+            'item_spacing' => 'preserve',
+            'walker'       => '',
+        );
+
+        if ( is_page() && $post->post_parent ) {
+            $childpages = wp_list_pages( $args );
+        } else {
+            $args['child_of'] = $post->ID;
+            $childpages = wp_list_pages($args);
+        }
+        if ( $childpages ) {
+
+            $string = '<div id="sub-navigation"><div class=""container"><ul class="col-md-12">' . $childpages . '</ul></div></div>';
+        } else {
+            return;
+        }
+
+        return $string;
+
+    }
+
+    /*
+     * Create General Shortcodes
+     *
+     * All shortcodes without specific category
+     */
+    public function create_shortcodes() {
+        add_shortcode('display_childpages', array($this, 'list_child_pages'));
+    }
 
 }
